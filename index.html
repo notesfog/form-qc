@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form QC Laptop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="page-header">
+  <img src="logo-tulusteknorent.png" alt="Logo TulusTeknoRent" class="header-logo" />
+  <div>
+    <h1>Form Quality Control Laptop - TulusTeknoRent</h1>
+    <p class="subtitle">Isi semua bagian checklist sebelum mencetak atau menyimpan laporan QC.</p>
+  </div>
+    </div>
+
+    <div class="progress-label" id="progress-label">Kelengkapan: 0%</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+
+    <!-- Informasi Penyewaan -->
+    <div class="section">
+      <div class="section-title">Informasi Penyewaan</div>
+      <div class="grid2">
+        <div class="field"><label for="namaPenyewa">Nama Penyewa</label><input id="namaPenyewa" placeholder="Nama lengkap" /></div>
+        <div class="field"><label for="perusahaan">Perusahaan / Instansi</label><input id="perusahaan" placeholder="Nama perusahaan atau Personal" /></div>
+        <div class="field"><label for="tglSewa">Tanggal Sewa</label><input type="date" id="tglSewa" /></div>
+        <div class="field"><label for="tglKembali">Tanggal Pengembalian</label><input type="date" id="tglKembali" /></div>
+        <div class="field"><label for="pic">PIC / Teknisi QC</label><input id="pic" placeholder="Nama teknisi" /></div>
+      </div>
+    </div>
+
+    <!-- Identitas Perangkat -->
+    <div class="section">
+      <div class="section-title">Identitas Perangkat</div>
+      <div class="grid2">
+        <div class="field"><label for="brand">Merk / Brand</label><input id="brand" placeholder="Contoh: MSI, Macbook, Lenovo" /></div>
+        <div class="field"><label for="model">Tipe / Model</label><input id="model" placeholder="Contoh: Gaming, Office, Macbook" /></div>
+        <div class="field"><label for="serial">Serial Number</label><input id="serial" placeholder="S/N perangkat" /></div>
+        <div class="field"><label for="asset">Asset Code</label><input id="asset" placeholder="Kode aset (jika ada)" /></div>
+        <div class="field"><label for="cpu">Processor</label><input id="cpu" placeholder="Contoh: Intel i5 Gen 12" /></div>
+        <div class="field"><label for="ram">RAM</label><input id="ram" placeholder="Contoh: 16GB" /></div>
+        <div class="field"><label for="storage">Storage (SSD/HDD)</label><input id="storage" placeholder="Contoh: 512GB SSD" /></div>
+        <div class="field"><label for="gpu">VGA / GPU</label><input id="gpu" placeholder="Contoh: RTX 2050" /></div>
+        <div class="field"><label for="os">Sistem Operasi</label><input id="os" placeholder="Contoh: Windows 11 Pro" /></div>
+        <div class="field"><label for="ip">IP Address</label><input id="ip" placeholder="IP Address (jika ada)" /></div>
+      </div>
+    </div>
+
+    <!-- Checklist Kondisi Fisik -->
+    <div class="section">
+      <div class="section-title">Checklist Kondisi Fisik</div>
+      <p class="hint">No 1–10: Normal / Abnormal</p>
+      <table>
+        <thead><tr><th>No</th><th>Komponen</th><th>Status</th></tr></thead>
+        <tbody id="fisik-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Checklist Fungsi Sistem -->
+    <div class="section">
+      <div class="section-title">Checklist Fungsi Sistem</div>
+      <p class="hint">No 1–7: Normal / Abnormal &nbsp;|&nbsp; No 8–10: On / Off</p>
+      <table>
+        <thead><tr><th>No</th><th>Pengujian</th><th>Status</th></tr></thead>
+        <tbody id="sistem-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Checklist Software -->
+    <div class="section">
+      <div class="section-title">Checklist Software &amp; Konfigurasi</div>
+      <p class="hint">No 1–7: Ready / Tidak Ready</p>
+      <table>
+        <thead><tr><th>No</th><th>Item</th><th>Status</th></tr></thead>
+        <tbody id="software-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Aksesoris -->
+    <div class="section">
+      <div class="section-title">Aksesoris yang Disertakan</div>
+      <div id="aksesori-grid" class="aksesori-grid"></div>
+    </div>
+
+    <!-- Catatan -->
+    <div class="section">
+      <div class="section-title">Catatan / Temuan</div>
+      <div class="field"><textarea id="catatan" placeholder="Tuliskan catatan atau temuan selama proses QC..."></textarea></div>
+    </div>
+
+    <!-- Kesimpulan -->
+    <div class="section">
+      <div class="section-title">Kesimpulan QC</div>
+      <div class="conclusion-grid" id="conclusion-grid">
+        <div class="concl-btn" data-val="siap" onclick="setConclusion(this)">
+          <div class="concl-icon green">&#10003;</div>
+          <div class="concl-label">Siap Digunakan</div>
+          <div class="concl-sub">Semua komponen normal</div>
+        </div>
+        <div class="concl-btn" data-val="perlu" onclick="setConclusion(this)">
+          <div class="concl-icon amber">!</div>
+          <div class="concl-label">Perlu Perbaikan</div>
+          <div class="concl-sub">Ada komponen yang perlu diperbaiki</div>
+        </div>
+        <div class="concl-btn" data-val="tidak" onclick="setConclusion(this)">
+          <div class="concl-icon red">&#10005;</div>
+          <div class="concl-label">Tidak Layak Pakai</div>
+          <div class="concl-sub">Perangkat tidak dapat digunakan</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="resetForm()">Reset Form</button>
+      <button class="btn btn-print" onclick="printForm()">Cetak PDF</button>
+      <button class="btn btn-primary" onclick="printForm()">Simpan &amp; Cetak</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
